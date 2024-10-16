@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Houseplants for Sale</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 20px;
+		}
+		.category {
+			margin-bottom: 40px;
+		}
+		h2 {
+			border-bottom: 2px solid #00b3b3;
+			padding-bottom: 10px;
+		}
+		.plant {
+			display: inline-block;
+			width: 200px;
+			text-align: center;
+			margin: 10px;
+			padding: 20px;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+		}
+		.plant img {
+			width: 100px;
+			height: 100px;
+		}
+		.plant button {
+			background-color: #00b3b3;
+			color: white;
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.plant button:disabled {
+			background-color: grey;
+		}
+		.cart {
+			position: fixed;
+			top: 10px;
+			right: 10px;
+			background-color: #00b3b3;
+			color:white !important;
+			padding: 15px;
+			border-radius: 50%;
+			font-size: 1.2rem;
+		}
+		
+		.cart a:link, .cart a:visited, .cart a:hover {color:white !important;text-decoration:none}
+	</style>
+</head>
+<body>
+
+	<!-- Shopping Cart -->
+	<div class="cart">
+		<a href="checkout.html">🎁 <span id="cart-count">2</span></a>
+	</div>
+
+	<!-- Category: Indoor Plants -->
+	<div class="category">
+		<h2>Indoor Plants</h2>
+		<div class="plant" data-name="Snake Plant" data-price="20">
+			<img src="img/snake-plant.jpg" alt="Snake Plant">
+			<h3>Snake Plant</h3>
+			<p>Cat: Green</p>
+			<p>$20.00</p>
+			<button onclick="addToCart(this)">Add to Cart</button>
+		</div>
+		<div class="plant" data-name="Peace Lily" data-price="15">
+			<img src="img/peace-lily.jpg" alt="Peace Lily">
+			<h3>Peace Lily</h3>
+			<p>Cat: Green</p>
+			<p>$15.00</p>
+			<button onclick="addToCart(this)">Add to Cart</button>
+		</div>
+	</div>
+
+	<!-- Category: Outdoor Plants -->
+	<div class="category">
+		<h2>Outdoor Plants</h2>
+		<div class="plant" data-name="Rosemary" data-price="12">
+			<img src="img/rosemary.jpg" alt="Rosemary">
+			<h3>Rosemary</h3>
+			<p>Cat: Green</p>
+			<p>$12.00</p>
+			<button onclick="addToCart(this)">Add to Cart</button>
+		</div>
+		<div class="plant" data-name="Lavender" data-price="18">
+			<img src="img/lavender.jpg" alt="Lavender">
+			<h3>Lavender</h3>
+			<p>Cat: Purple</p>
+			<p>$18.00</p>
+			<button onclick="addToCart(this)">Add to Cart</button>
+		</div>
+	</div>
+
+	<!-- Category: Succulents -->
+	<div class="category">
+		<h2>Succulents</h2>
+		<div class="plant" data-name="Aloe Vera" data-price="10">
+			<img src="img/aloe-vera.jpg" alt="Aloe Vera">
+			<h3>Aloe Vera</h3>
+			<p>Cat: Green</p>
+			<p>$10.00</p>
+			<button onclick="addToCart(this)">Add to Cart</button>
+		</div>
+		<div class="plant" data-name="Jade Plant" data-price="14">
+			<img src="img/jade-plant.jpg" alt="Jade Plant">
+			<h3>Jade Plant</h3>
+			<p>Cat: Green</p>
+			<p>$14.00</p>
+			<button onclick="addToCart(this)">Add to Cart</button>
+		</div>
+	</div>
+
+	<script>
+		// Initialize cart count
+		let cartCount = 0;
+
+		// Function to add plants to the cart
+		function addToCart(button) {
+			// Get plant information from data attributes
+			const plantName = button.closest('.plant').getAttribute('data-name');
+			const plantPrice = button.closest('.plant').getAttribute('data-price');
+
+			// Add the plant to the cart (you could expand this for more complex cart functionality)
+			console.log(`Added to cart: ${plantName} ($${plantPrice})`);
+
+			// Increase the cart count
+			cartCount++;
+			document.getElementById('cart-count').innerText = cartCount;
+
+			// Disable the button after adding to the cart
+			button.disabled = true;
+		}
+	</script>
+
+</body>
+</html>

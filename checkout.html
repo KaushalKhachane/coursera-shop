@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Shopping Cart</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 20px;
+		}
+		h1, h3 {
+			color: #00b3b3;
+		}
+		.cart-container {
+			margin-top: 40px;
+		}
+		.cart-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 20px;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+		}
+		.cart-item img {
+			width: 50px;
+			height: 50px;
+		}
+		.cart-item div {
+			margin-left: 10px;
+		}
+		.buttons {
+			display: flex;
+			gap: 10px;
+		}
+		.plant {
+			display: inline-block;
+			width: 200px;
+			text-align: center;
+			margin: 10px;
+			padding: 20px;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+		}
+		.plant img {
+			width: 100px;
+			height: 100px;
+		}
+		.plant button {
+			background-color: #00b3b3;
+			color: white;
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.plant button:disabled {
+			background-color: grey;
+		}
+		.checkout-btn, .continue-shopping-btn {
+			margin-top: 20px;
+			padding: 10px 20px;
+			background-color: #00b3b3;
+			color: white;
+			border: none;
+			cursor: pointer;
+		}
+		.checkout-btn:hover, .continue-shopping-btn:hover {
+			background-color: #008b8b;
+		}
+		#total-info {
+			margin-top: 20px;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>Your Shopping Cart</h1>
+
+	<!-- Cart Container -->
+	<div class="cart-container" id="cart-container"></div>
+	
+	<div class="plant" data-name="Snake Plant" data-price="20">
+		<img src="img/snake-plant.jpg" alt="Snake Plant">
+		<h3>Snake Plant</h3>
+		<p>Cat: Green</p>
+		<p>$20.00</p>
+	</div>
+	<div class="plant" data-name="Peace Lily" data-price="15">
+		<img src="img/peace-lily.jpg" alt="Peace Lily">
+		<h3>Peace Lily</h3>
+		<p>Cat: Green</p>
+		<p>$10.00</p>
+	</div>
+
+	<!-- Total and Buttons -->
+	<div id="total-info">
+		<h3>Total Items: <span id="total-items">2</span></h3>
+		<h3>Total Cost: $<span id="total-cost">30.00</span></h3>
+		<button class="checkout-btn" onclick="checkout()">Checkout</button>
+		<button class="continue-shopping-btn" onclick="window.location.href='product-listing.html'">Continue Shopping</button>
+	</div>
+
+	<script>
+		let cart = JSON.parse(localStorage.getItem('cart')) || {};
+		let totalCost = 0;
+
+		function updateCartDisplay() {
+			let cartContainer = document.getElementById('cart-container');
+			cartContainer.innerHTML = '';
+			let totalItems = 0;
+			totalCost = 0;
+
+			for (const [name, details] of Object.entries(cart)) {
+				const { price, quantity, imgSrc } = details;
+				totalItems += quantity;
+				totalCost += price * quantity;
+
+				cartContainer.innerHTML += `
+					<div class="cart-item">
+						<img src="${imgSrc}" alt="${name}">
+						<div>
+							<h4>${name}</h4>
+							<p>$${price} each</p>
+							<p>Quantity: ${quantity}</p>
+						</div>
+						<div class="buttons">
+							<button onclick="increaseQuantity('${name}')">+</button>
+							<button onclick="decreaseQuantity('${name}')">-</button>
+							<button onclick="deleteItem('${name}')">
